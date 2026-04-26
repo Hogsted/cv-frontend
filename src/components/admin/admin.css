@@ -166,6 +166,17 @@ textarea { resize: vertical; }
 
 .btn-delete:hover { background: #ff6b6b; color: #fff; }
 
+.field-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.field-check label {
+  font-size: 0.9rem;
+  color: #fff;
+}
+
 .error   { color: #ff8787; font-size: 0.85rem; margin: 0.25rem 0 0; }
 .loading { color: #888; padding: 1rem 0; }
 .empty   { color: #555; padding: 1rem 0; }

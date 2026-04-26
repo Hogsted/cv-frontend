@@ -21,6 +21,10 @@
           <option value="Ekspert">Ekspert</option>
         </select>
       </div>
+      <div class="field field-check">
+        <input type="checkbox" id="featured" v-model="form.isFeatured" />
+        <label for="featured">Vis på forside</label>
+      </div>
 
       <p v-if="formError" class="error">{{ formError }}</p>
 
@@ -62,7 +66,7 @@ const saving    = ref(false)
 const editingId = ref(null)
 const formError = ref('')
 
-const emptyForm = () => ({ name: '', level: 'Øvet' })
+const emptyForm = () => ({ name: '', level: 'Øvet', isFeatured: false })
 const form = ref(emptyForm())
 
 onMounted(load)
@@ -85,7 +89,7 @@ function openCreate() {
 }
 
 function openEdit(item) {
-  form.value = { name: item.name, level: item.level }
+  form.value = { name: item.name, level: item.level, isFeatured: item.isFeatured ?? false }
   editingId.value = item.id
   formError.value = ''
   showForm.value = true

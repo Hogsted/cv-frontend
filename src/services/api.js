@@ -1,8 +1,39 @@
 import axios from 'axios'
+import router from '../router'
 
 const api = axios.create({
-  baseURL: '/api'
+  baseURL: import.meta.env.VITE_API_BASE_URL ?? '/api'
 })
+
+api.interceptors.request.use(config => {
+  const token = localStorage.getItem('token')
+  if (token) config.headers.Authorization = `Bearer ${token}`
+  return config
+})
+
+const MAX_RETRIES = 3
+const RETRY_DELAY_MS = 2000
+
+api.interceptors.response.use(null, async error => {
+  const config = error.config
+  if (error.response?.status === 401) {
+    localStorage.removeItem('token')
+    router.push('/login')
+    return Promise.reject(error)
+  }
+  if (error.response?.status === 500 && config.method === 'get') {
+    config._retryCount = (config._retryCount ?? 0) + 1
+    if (config._retryCount <= MAX_RETRIES) {
+      await new Promise(r => setTimeout(r, RETRY_DELAY_MS * config._retryCount))
+      return api(config)
+    }
+  }
+  return Promise.reject(error)
+})
+
+export const authApi = {
+  login: (data) => api.post('/auth/login', data)
+}
 
 export const profileApi = {
   get: ()           => api.get('/profile'),
@@ -43,5 +74,8 @@ export const educationApi = {
 }
 
 export const contactApi = {
-  send: (data) => api.post('/contactmessages', data)
+  send: (data)  => api.post('/contactmessages', data),
+  getAll: ()    => api.get('/contactmessages'),
+  markRead: (id) => api.patch(`/contactmessages/${id}/read`),
+  remove: (id)  => api.delete(`/contactmessages/${id}`)
 }

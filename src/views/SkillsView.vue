@@ -7,7 +7,7 @@
     <div v-else-if="skills.length === 0" class="empty">Ingen kompetencer endnu.</div>
 
     <div v-else class="skills-list">
-      <div v-for="s in skills" :key="s.id" class="skill-item">
+      <div v-for="s in sortedSkills" :key="s.id" class="skill-item">
         <span class="skill-name">{{ s.name }}</span>
         <span class="skill-level" :class="levelClass(s.level)">{{ s.level }}</span>
       </div>
@@ -16,11 +16,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { skillsApi } from '../services/api'
 
 const skills = ref([])
 const loading = ref(true)
+
+const levelOrder = { Ekspert: 0, Avanceret: 1, Øvet: 2, Begynder: 3 }
+
+const sortedSkills = computed(() =>
+  [...skills.value].sort((a, b) => (levelOrder[a.level] ?? 4) - (levelOrder[b.level] ?? 4))
+)
 
 onMounted(async () => {
   try {
