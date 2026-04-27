@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div v-if="loading" class="loading">Henter...</div>
+    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
 
     <div v-else-if="items.length === 0 && !showForm" class="empty">Ingen kompetencer endnu.</div>
 

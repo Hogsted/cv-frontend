@@ -2,7 +2,7 @@
   <div>
     <h2>Projekter</h2>
 
-    <div v-if="loading" class="loading">Henter projekter...</div>
+    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
 
     <div v-else-if="projects.length === 0" class="empty">Ingen projekter endnu.</div>
 

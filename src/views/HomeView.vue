@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div v-if="loading" class="loading">Henter profil...</div>
+    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
 
     <div v-else-if="profile" class="layout">
       <div class="profile">
@@ -17,7 +17,7 @@
 
       <div class="skills-panel">
         <h3>Top 3 Kompetencer</h3>
-        <div v-if="skillsLoading" class="loading">Henter...</div>
+        <div v-if="skillsLoading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
         <div v-else class="skills-list">
           <div v-for="s in sortedSkills" :key="s.id" class="skill-item">
             <span class="skill-name">{{ s.name }}</span>

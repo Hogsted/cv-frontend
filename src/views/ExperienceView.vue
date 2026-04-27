@@ -2,7 +2,7 @@
   <div>
     <h2>Erfaring</h2>
 
-    <div v-if="loading" class="loading">Henter erfaring...</div>
+    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
 
     <div v-else-if="experiences.length === 0" class="empty">Ingen erfaring endnu.</div>
 

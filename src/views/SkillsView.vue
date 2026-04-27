@@ -2,7 +2,7 @@
   <div>
     <h2>Kompetencer</h2>
 
-    <div v-if="loading" class="loading">Henter kompetencer...</div>
+    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
 
     <div v-else-if="skills.length === 0" class="empty">Ingen kompetencer endnu.</div>
 

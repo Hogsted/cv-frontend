@@ -4,7 +4,7 @@
       <h3>Beskeder</h3>
     </div>
 
-    <div v-if="loading" class="loading">Henter...</div>
+    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
 
     <div v-else-if="items.length === 0" class="empty">Ingen beskeder endnu.</div>
 

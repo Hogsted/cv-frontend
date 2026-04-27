@@ -2,7 +2,7 @@
   <div>
     <h2>Uddannelse</h2>
 
-    <div v-if="loading" class="loading">Henter uddannelse...</div>
+    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
 
     <div v-else-if="educations.length === 0" class="empty">Ingen uddannelse endnu.</div>
 
