@@ -2,6 +2,12 @@
   <div>
     <h2>Kontakt</h2>
 
+    <p class="contact-info">
+      Du kan kontakte mig igennem formulen her, på
+      <a href="mailto:gustavhogsted@gmail.com">gustavhogsted@gmail.com</a>
+      eller på <a href="tel:+4553643620">+45 53643620</a>
+    </p>
+
     <form @submit.prevent="submit" class="contact-form">
       <div class="field">
         <label>Navn</label>
@@ -60,6 +66,20 @@ async function submit() {
 </script>
 
 <style scoped>
+.contact-info {
+  color: #aaa;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info a {
+  color: #4fc3f7;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
 .contact-form {
   max-width: 550px;
   margin-top: 1.5rem;
