@@ -21,7 +21,8 @@ api.interceptors.response.use(null, async error => {
     router.push('/login')
     return Promise.reject(error)
   }
-  if (error.response?.status === 500 && config.method === 'get') {
+  const retryableStatus = [500, 502, 503, 504].includes(error.response?.status)
+  if ((retryableStatus || !error.response) && config.method === 'get') {
     config._retryCount = (config._retryCount ?? 0) + 1
     if (config._retryCount <= MAX_RETRIES) {
       await new Promise(r => setTimeout(r, RETRY_DELAY_MS * config._retryCount))
