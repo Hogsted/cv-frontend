@@ -18,7 +18,9 @@ Vue 3 SPA (Composition API + `<script setup>`, no TypeScript) built with Vite. N
 
 ### Data (`src/data/*.js`)
 
-All CV content (profile, projects, skills, experiences, educations) is hardcoded in plain JS modules under `src/data/`. Views import these directly and render them — there is no fetching, loading state, or error handling to worry about. To update content, edit the relevant file in `src/data/`.
+Profile, skills, experiences, and educations are hardcoded in plain JS modules under `src/data/`. Views import these directly and render them — no fetching, loading state, or error handling to worry about.
+
+**Projects are the exception:** `src/data/projects.js` is generated at build time by `scripts/fetch-github-projects.js` and is gitignored — don't edit it by hand, it gets overwritten. To add/remove a showcased project or change its title/fallback description/live-URL override, edit `src/data/projects.config.js` (the small, committed source list) instead. The script runs automatically via `predev`/`prebuild` npm hooks; it calls the GitHub REST API per repo for `description`, `homepage`, and language byte-counts (top 3 become the card's tech tags), and derives the filter `categories` (`C#/.NET`, `Frontend`, `Backend`, `API`) heuristically from the primary language plus repo name/description keywords — this is an approximation, not guaranteed precise for mixed-stack repos. On a per-repo fetch failure the script falls back to the previous generated data (or the config's `descriptionFallback`) rather than breaking the build. CI passes `secrets.GITHUB_TOKEN` to the build step for a higher rate limit.
 
 ### View Structure
 

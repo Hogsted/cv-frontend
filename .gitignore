@@ -3,3 +3,4 @@ dist
 .env
 .env.local
 .claude/
+src/data/projects.js
