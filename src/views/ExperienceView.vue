@@ -2,9 +2,7 @@
   <div>
     <h2>Erfaring</h2>
 
-    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
-
-    <div v-else-if="experiences.length === 0" class="empty">Ingen erfaring endnu.</div>
+    <div v-if="experiences.length === 0" class="empty">Ingen erfaring endnu.</div>
 
     <div v-else class="timeline">
       <div v-for="e in experiences" :key="e.id" class="entry">
@@ -24,20 +22,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { experienceApi } from '../services/api'
-
-const experiences = ref([])
-const loading = ref(true)
-
-onMounted(async () => {
-  try {
-    const res = await experienceApi.getAll()
-    experiences.value = res.data
-  } finally {
-    loading.value = false
-  }
-})
+import experiences from '../data/experiences.js'
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('da-DK', { year: 'numeric', month: 'short' })

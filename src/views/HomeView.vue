@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
-
-    <div v-else-if="profile" class="layout">
+    <div class="layout">
       <div class="profile">
         <h1>{{ profile.fullName }}</h1>
         <p class="title">{{ profile.title }}</p>
@@ -17,8 +15,7 @@
 
       <div class="skills-panel">
         <h3>Top 3 Kompetencer</h3>
-        <div v-if="skillsLoading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
-        <div v-else class="skills-list">
+        <div class="skills-list">
           <div v-for="s in sortedSkills" :key="s.id" class="skill-item">
             <span class="skill-name">{{ s.name }}</span>
             <span class="skill-level" :class="levelClass(s.level)">{{ s.level }}</span>
@@ -26,47 +23,21 @@
         </div>
       </div>
     </div>
-
-    <div v-else class="empty">
-      <p>Ingen profil oprettet endnu.</p>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { profileApi, skillsApi } from '../services/api'
-
-const profile = ref(null)
-const loading = ref(true)
-const skills = ref([])
-const skillsLoading = ref(true)
+import { computed } from 'vue'
+import profile from '../data/profile.js'
+import skills from '../data/skills.js'
 
 const levelOrder = { Ekspert: 0, Avanceret: 1, Øvet: 2, Begynder: 3 }
 
 const sortedSkills = computed(() =>
-  skills.value
+  skills
     .filter(s => s.isFeatured)
     .sort((a, b) => (levelOrder[a.level] ?? 4) - (levelOrder[b.level] ?? 4))
 )
-
-onMounted(async () => {
-  try {
-    const res = await profileApi.get()
-    profile.value = res.data
-  } catch {
-    profile.value = null
-  } finally {
-    loading.value = false
-  }
-
-  try {
-    const res = await skillsApi.getAll()
-    skills.value = res.data
-  } finally {
-    skillsLoading.value = false
-  }
-})
 
 function levelClass(level) {
   const map = {

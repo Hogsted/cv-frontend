@@ -2,9 +2,7 @@
   <div>
     <h2>Kompetencer</h2>
 
-    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
-
-    <div v-else-if="skills.length === 0" class="empty">Ingen kompetencer endnu.</div>
+    <div v-if="skills.length === 0" class="empty">Ingen kompetencer endnu.</div>
 
     <div v-else class="skills-list">
       <div v-for="s in sortedSkills" :key="s.id" class="skill-item">
@@ -16,26 +14,14 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { skillsApi } from '../services/api'
-
-const skills = ref([])
-const loading = ref(true)
+import { computed } from 'vue'
+import skills from '../data/skills.js'
 
 const levelOrder = { Ekspert: 0, Avanceret: 1, Øvet: 2, Begynder: 3 }
 
 const sortedSkills = computed(() =>
-  [...skills.value].sort((a, b) => (levelOrder[a.level] ?? 4) - (levelOrder[b.level] ?? 4))
+  [...skills].sort((a, b) => (levelOrder[a.level] ?? 4) - (levelOrder[b.level] ?? 4))
 )
-
-onMounted(async () => {
-  try {
-    const res = await skillsApi.getAll()
-    skills.value = res.data
-  } finally {
-    loading.value = false
-  }
-})
 
 function levelClass(level) {
   const map = {

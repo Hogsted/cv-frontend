@@ -2,9 +2,7 @@
   <div>
     <h2>Uddannelse</h2>
 
-    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
-
-    <div v-else-if="educations.length === 0" class="empty">Ingen uddannelse endnu.</div>
+    <div v-if="educations.length === 0" class="empty">Ingen uddannelse endnu.</div>
 
     <div v-else class="timeline">
       <div v-for="e in educations" :key="e.id" class="entry">
@@ -24,20 +22,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { educationApi } from '../services/api'
-
-const educations = ref([])
-const loading = ref(true)
-
-onMounted(async () => {
-  try {
-    const res = await educationApi.getAll()
-    educations.value = res.data
-  } finally {
-    loading.value = false
-  }
-})
+import educations from '../data/educations.js'
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('da-DK', { year: 'numeric', month: 'short' })

@@ -2,9 +2,7 @@
   <div>
     <h2>Projekter</h2>
 
-    <div v-if="loading" class="loading">Henter fra Azure, kan tage op til 10 sekunder...</div>
-
-    <div v-else-if="projects.length === 0" class="empty">Ingen projekter endnu.</div>
+    <div v-if="projects.length === 0" class="empty">Ingen projekter endnu.</div>
 
     <div v-else class="grid">
       <div v-for="p in projects" :key="p.id" class="card">
@@ -20,20 +18,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { projectsApi } from '../services/api'
-
-const projects = ref([])
-const loading = ref(true)
-
-onMounted(async () => {
-  try {
-    const res = await projectsApi.getAll()
-    projects.value = res.data
-  } finally {
-    loading.value = false
-  }
-})
+import projects from '../data/projects.js'
 </script>
 
 <style scoped>

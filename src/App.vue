@@ -6,8 +6,6 @@
       <RouterLink to="/skills">Kompetencer</RouterLink>
       <RouterLink to="/experience">Erfaring</RouterLink>
       <RouterLink to="/education">Uddannelse</RouterLink>
-      <RouterLink to="/contact">Kontakt</RouterLink>
-      <RouterLink to="/admin" class="admin-link">Admin</RouterLink>
     </nav>
   </header>
 
