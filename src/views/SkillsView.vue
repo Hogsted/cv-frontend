@@ -154,8 +154,8 @@ import skills from '../data/skills.js'
 
 const focusAreas = [
   'Videreudvikling af .NET kompetencer',
-  'Avancerede Vue.js mønstre',
-  'Containerisering og DevOps'
+  'Større forståelse af Vue.js',
+  'DevOps og cloud-infrastruktur'
 ]
 
 const workTags = ['Webudvikling', 'Backend', 'APIs', 'Databaser', 'DevOps']
